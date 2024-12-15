@@ -1,11 +1,12 @@
-## 1. BUILD ARGS
-# These allow changing the produced image by passing different build args to adjust
-# the source from which your image is built.
-# Build args can be provided on the commandline when building locally with:
-#   podman build -f Containerfile --build-arg FEDORA_VERSION=40 -t local-image
 
-# SOURCE_IMAGE arg can be anything from ublue upstream which matches your desired version:
-# See list here: https://github.com/orgs/ublue-os/packages?repo_name=main
+### 1. BUILD ARGS
+## These allow changing the produced image by passing different build args to adjust
+## the source from which your image is built.
+## Build args can be provided on the commandline when building locally with:
+##   podman build -f Containerfile --build-arg FEDORA_VERSION=40 -t local-image
+
+## SOURCE_IMAGE arg can be anything from ublue upstream which matches your desired version:
+## See list here: https://github.com/orgs/ublue-os/packages?repo_name=main
 # - "silverblue"
 # - "kinoite"
 # - "sericea"
@@ -13,21 +14,21 @@
 # - "lazurite"
 # - "vauxite"
 # - "base"
-#
-#  "aurora", "bazzite", "bluefin" or "ucore" may also be used but have different suffixes.
+
+##  "aurora", "bazzite", "bluefin" or "ucore" may also be used but have different suffixes.
 ARG SOURCE_IMAGE="silverblue"
 
 ## SOURCE_SUFFIX arg should include a hyphen and the appropriate suffix name
-# These examples all work for silverblue/kinoite/sericea/onyx/lazurite/vauxite/base
+## These examples all work for silverblue/kinoite/sericea/onyx/lazurite/vauxite/base
 # - "-main"
 # - "-nvidia"
 # - "-asus"
 # - "-asus-nvidia"
 # - "-surface"
 # - "-surface-nvidia"
-#
-# aurora, bazzite and bluefin each have unique suffixes. Please check the specific image.
-# ucore has the following possible suffixes
+
+## aurora, bazzite and bluefin each have unique suffixes. Please check the specific image.
+## ucore has the following possible suffixes
 # - stable
 # - stable-nvidia
 # - stable-zfs
@@ -48,12 +49,20 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+## copy dirs and files to /tmp directory
+COPY packages /tmp/packages
+COPY scripts /tmp/scripts
+COPY system_files /tmp/system_files
 COPY build.sh /tmp/build.sh
 
-RUN mkdir -p /var/lib/alternatives && \
+## copy repository files, run build.sh script and commit 
+RUN rsync -rvK /tmp/system_files/ / && \
+    mkdir -p /var/lib/alternatives && \
     /tmp/build.sh && \
     ostree container commit
-## NOTES:
+
+
+### NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs
 # - All RUN commands must end with ostree container commit
 #   see: https://coreos.github.io/rpm-ostree/container/#using-ostree-container-commit

@@ -1,0 +1,17 @@
+pass
+pam_yubico
+ykocli
+yubico-piv-tool
+borgbackup
+syncthing
+policycoreutils
+sepolicy_analysis
+libselinux-utils
+checkpolicy
+selinux-policy
+selinux-policy-mls
+selinux-policy-doc
+selinux-policy-mls
+selinux-policy-targeted
+setools-console
+setools-console-analyses

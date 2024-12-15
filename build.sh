@@ -3,21 +3,31 @@
 set -ouex pipefail
 
 RELEASE="$(rpm -E %fedora)"
-
+### install flatpaks
+flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+# flatpak -y install --system $(cat /tmp/packages/flatpaks)
 
 ### Install packages
+rpm-ostree install \
+$(cat /tmp/packages/desktop) \
+$(cat /tmp/packages/develop) \
+$(cat /tmp/packages/fonts) \
+$(cat /tmp/packages/multimedia) \
+$(cat /tmp/packages/personal) \
+$(cat /tmp/packages/security) \
+$(cat /tmp/packages/temporary) \
+$(cat /tmp/packages/virtual)
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+### Run configuration scripts
+sh /tmp/scripts/kvm.sh
+sh /tmp/scripts/yubico.sh
 
-# this installs a package from fedora repos
-rpm-ostree install screen
-
-# this would install a package from rpmfusion
-# rpm-ostree install vlc
-
-#### Example for enabling a System Unit File
-
+### Enabling System Unit File(s)
+systemctl enable rpm-ostreed-automatic.timer
+systemctl enable tuned.service
+systemctl enable docker.service
 systemctl enable podman.socket
+systemctl enable fstrim.timer
+
+### Disabling System Unit File(s)
+systemctl disable cosmic-greeter.service
