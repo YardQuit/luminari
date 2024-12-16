@@ -40,9 +40,9 @@ rpm-ostree install fapolicyd fapolicyd-selinux rpm-plugin-fapolicyd
 ```
 Restart your system for the changes take effect:
 ```bash
-reboot
+systemctl reboot
 ```
-Configure the fapolicyd to allow repository packages, else fapolicy will allow everything.
+Configure the fapolicyd to allow repository packages, else fapolicyd will allow everything.
 ```bash
 sudo sed -i 's/integrity = none/integrity = sha256/g' /etc/fapolicyd/fapolicyd.conf
 ```
