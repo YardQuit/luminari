@@ -1,0 +1,246 @@
+################################################################################
+# LANGUAGE SERVERS
+################################################################################
+# LTEX-LS
+# ltex-ls binary: https://github.com/valentjn/ltex-ls/releases
+# mv extracted foler to /opt named as ltex-ls
+# PATH="/opt/ltex-ls/bin:$PATH"
+[language-server.ltex-ls]
+command = 'ltex-ls'
+
+[language-server.ltex-ls.config]
+ltex.language = "en-US"
+ltex.dictionary = { "en-US" = [
+":~/.config/helix/dict_en-US",
+"CISSP",
+"CCNA",
+"CCNP",
+"CCIE",
+"GCFA",
+"CAAF",
+"CCO",
+"MSP",
+"ITIL",
+"FCI",
+"gpg",
+"sethhan",
+"atime",
+"mtime",
+"ctime",
+"filesystem",
+"sbin",
+"usr",
+"sys",
+"srv",
+"mnt",
+"loopback",
+"podman",
+"systemctl",
+"systemd",
+"ostree",
+"rpm-ostree",
+"sudo",
+"btrfs"
+] }
+
+# RUST-ANALYZER
+[language-server.rust-analyzer]
+command = "rust-analyzer"
+
+[language-server.rust-analyzer.config]
+checkOnSave = {enable = true, command = "clippy"}
+
+# RPM-SPEC
+[language-server.rpm-spec]
+command = "python3"
+args = ["-m rpm_spec_language_server", "--stdio"]
+
+# PYLSP
+[language-server.pylsp]
+command = "pylsp"
+
+[language-server.pylsp.config.pylsp]
+plugins.pyls_mypy.enabled = true
+plugins.pyls_mypy.live_mode = true
+
+# CLANGD
+[language-server.clangd]
+command = "clangd"
+
+# BASH-LANGUAGE-SERVER
+[language-server.bash-language-server]
+command = "bash-language-server"
+
+# GOPLS
+[language-server.gopls]
+command = "gopls"
+
+# CSS
+[language-server.css]
+command = "css-languageserver"
+args = ["--stdio"]
+
+# HTML
+[language-server.html]
+command = "html-languageserver"
+args = ["--stdio"]
+
+# JSON
+[language-server.json]
+command = "json-languageserver"
+args = ["--stdio"]
+
+# TOML
+[language-server.toml]
+command = "taplo"
+args = ["lsp", "stdio"]
+
+################################################################################
+# LANGUAGES
+################################################################################
+# RUST
+[[language]]
+name = "rust"
+auto-format = false
+language-servers = [{name = "rust-analyzer"}]
+indent = {tab-width = 4, unit = "    "}
+roots = ["Cargo.toml", "Cargo.lock", "Workspace.toml", ".git"]
+rulers = [80]
+
+# RPM-SPEC
+[[language]]
+name = "rpm-spec"
+scope = "source.spec"
+auto-format = false
+language-servers = [{name = "rpm-spec"}]
+indent = {tab-width = 4, unit = "    "}
+file-types = ["spec"]
+rulers = [80]
+
+# MARKDOWN
+[[language]]
+name = "markdown"
+auto-format = false
+language-servers = [{name = "ltex-ls"}]
+indent = {tab-width = 4, unit = "    "}
+file-types = ["md", "txt"]
+rulers = [80]
+
+# GIT
+[[language]]
+name = "git-commit"
+auto-format = false
+language-servers = [{name = "ltex-ls"}]
+indent = {tab-width = 4, unit = "    "}
+rulers = [80]
+
+# LATEX
+[[language]]
+name = "latex"
+language-servers = [{name = "ltex-ls"}]
+indent = {tab-width = 2, unit = "  "}
+file-types = ["tex"]
+text-width = 78
+rulers = [78]
+
+# PYTHON
+[[language]]
+name = "python"
+auto-format = false
+language-servers = [{name = "pylsp"}]
+formatter = {command = "black", args = ["--quiet", "-"]}
+indent = {tab-width = 4, unit = "    "}
+shebangs = ["python"]
+
+# C
+[[language]]
+name = "c"
+language-servers = [{name = "clangd"}]
+auto-format = false
+indent = {tab-width = 4, unit = "    "}
+file-types = ["c", "h"]
+
+# CPP
+[[language]]
+name = "cpp"
+language-servers = [{name = "clangd"}]
+auto-format = false
+indent = {tab-width = 4, unit = "    "}
+file-types = ["c", "h"]
+
+# BASH
+[[language]]
+name = "bash"
+auto-format = false
+# language-servers = [
+#     {name = "bash-language-server"}, 
+#     {name = "awk-language-server"}]
+language-servers = [
+    {name = "bash-language-server"}]
+formatter = {command = 'shfmt', args = ["-i", "4"]}
+indent = {tab-width = 4, unit = "    "}
+shebangs = ["sh", "bash", "zsh", "dash"]
+
+# GO
+[[language]]
+name = "go"
+auto-format = false
+language-servers = [{name = "gopls"}]
+indent = {tab-width = 4, unit = "    "}
+
+# GOMOD
+[[language]]
+name = "gomod"
+auto-format = false
+language-servers = [{name = "gopls"}]
+indent = {tab-width = 4, unit = "    "}
+
+# GOTMPL
+[[language]]
+name = "gotmpl"
+auto-format = false
+language-servers = [{name = "gopls"}]
+indent = {tab-width = 4, unit = "    "}
+
+# GOWORK
+[[language]]
+name = "gowork"
+auto-format = false
+language-servers = [{name = "gopls"}]
+indent = {tab-width = 4, unit = "    "}
+
+# CSS
+[[language]]
+name = "css"
+auto-format = false
+language-servers = [{name = "css"}]
+indent = {tab-width = 2, unit = "  "}
+rulers = [80]
+file-types = ["css"]
+
+# HTML
+[[language]]
+name = "html"
+auto-format = false
+language-servers = [{name = "html"}]
+indent = {tab-width = 2, unit = "  "}
+rulers = [80]
+file-types = ["html"]
+
+# JSON
+[[language]]
+name = "json"
+auto-format = false
+language-servers = [{name = "json"}]
+indent = {tab-width = 2, unit = "  "}
+rulers = [80]
+file-types = ["json"]
+
+# TOML
+[[language]]
+name = "toml"
+auto-format = false
+language-servers = [{name = "toml"}]
+indent = {tab-width = 2, unit = "  "}
+rulers = [80]
+file-types = ["toml"]

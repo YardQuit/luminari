@@ -1,0 +1,119 @@
+theme = "dev_ao"
+
+[editor]
+line-number = "relative"
+cursorline = true
+cursorcolumn = true
+mouse = false
+scrolloff = 15
+color-modes = true
+true-color = true
+rulers = [80]
+text-width = 80
+auto-save = true
+auto-info = true
+auto-completion = true
+completion-trigger-len = 2
+completion-replace = true
+bufferline = "always"
+
+[editor.smart-tab]
+enable = false
+
+[editor.cursor-shape]
+# insert = "bar"
+# select = "underline"
+normal = "block"
+insert = "block"
+select = "block"
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+space = " "
+tab= " "
+tabpad = " "
+
+[editor.indent-guides]
+render = true
+character = "┊"
+
+[editor.lsp]
+display-messages = false
+display-inlay-hints = true
+
+[editor.statusline]
+left = ["mode", "spacer", "version-control", "spacer", "spinner", "spacer", "diagnostics", "spacer", "file-encoding", "file-type", "file-modification-indicator", "file-name"]
+right = ["selections", "primary-selection-length", "spacer", "position-percentage", "position", "total-line-numbers"]
+separator = "│"
+
+[keys.normal]
+x = "no_op" # is remapped to shift + v
+W = "goto_word" # goto jump-label
+V = "extend_line_below" # remapped from x
+Y = "yank_main_selection_to_clipboard"
+0 = "goto_line_start"
+G = ["goto_last_line", "align_view_center"]
+a = ["move_char_right", "insert_mode"]
+
+"Q" = "wclose"                # close a split-window
+A-C-l = ":vnew"               # vertical split new
+A-C-j = ":hnew"               # horizontal new
+
+left = "jump_view_left"       # nav split-window mode
+down = "jump_view_down"       # nav split-window mode
+up = "jump_view_up"           # nav split-window mode
+right = "jump_view_right"     # nav split-window mode
+
+C-d = "page_cursor_half_down"
+
+A-C-n ="goto_next_buffer"
+A-C-p ="goto_previous_buffer"
+C-q = ":bc"
+
+[keys.normal.g]
+q = [":reflow 80", "goto_line_start"]
+
+[keys.normal.backspace]
+c = ["select_mode", "goto_line_end", "yank", "delete_selection", "insert_mode"]
+d = ["select_mode", "goto_line_end", "yank", "delete_selection"]
+s = ["split_selection_on_newline", ":sort", "keep_primary_selection"]
+z = ["split_selection_on_newline"]
+f = ":format"
+U = "switch_to_uppercase"
+u = "switch_to_lowercase"
+p = ":sh pwd"
+j = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+k = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+
+[keys.normal.backspace.t]
+s = ":toggle auto-save"
+c = ":toggle auto-completion"
+i = ":toggle indent-guides.render"
+h = ":toggle lsp.display-inlay-hints"
+w = ":toggle soft-wrap.enable"
+
+[keys.normal.backspace.i]
+D = ":insert-output TZ=Pacific/Auckland date"
+d = ":insert-output date"
+
+[keys.normal.backspace.i.t]
+p = ":insert-output cat ~/.config/helix/templates/template.python"
+c = ":insert-output cat ~/.config/helix/templates/template.clang"
+
+[keys.insert] 
+
+[keys.select]
+Y = "yank_main_selection_to_clipboard"
+U = "switch_to_uppercase"
+u = "switch_to_lowercase"
+x = "no_op" # remapped to V
+V = "extend_line_below" # remapped from x
+A-x = "no_op" # remapped to Alt-v
+

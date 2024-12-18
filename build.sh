@@ -8,7 +8,7 @@ RELEASE="$(rpm -E %fedora)"
 # flatpak -y install --system $(cat /tmp/packages/flatpaks)
 
 ### Install packages
-rpm-ostree install \
+dnf install \
 $(cat /tmp/packages/desktop) \
 $(cat /tmp/packages/develop) \
 $(cat /tmp/packages/fonts) \

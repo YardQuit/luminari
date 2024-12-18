@@ -1,0 +1,111 @@
+# DISABLE KEY-BINDINGS
+map w
+
+# INTERPRETER FOR SHELL COMMANDS
+set shell bash
+
+# SET ERROR BEHAVIOR
+# set '-eu' options for shell commands
+# These options are used to have safer shell commands. Option '-e' is used to
+# exit on error and option '-u' is used to give error for unset variables.
+# Option '-f' disables pathname expansion which can be useful when $f, $fs, and
+# $fx variables contain names with '*' or '?' characters. However, this option
+# is used selectively within individual commands as it can be limiting at
+# times.
+#set shellopts '-eu'
+
+# SET NUMBER OF COLUMNS TO RENDER
+set ratios 1:2
+
+# SET INFO
+#set info time
+
+# AUTO UPDATE WITH :RELOAD
+set period 5
+
+# SET PREVIW
+set preview true
+
+# SET FIELD SEPARATOR
+# set internal field separator (IFS) to "\n" for shell commands
+# This is useful to automatically split file names in $fs and $fx properly
+# since default file separator used in these variables (i.e. 'filesep' option)
+# is newline. You need to consider the values of these options and create your
+# commands accordingly.
+set ifs "\n"
+
+# LEAVE SOME SPACE AT THE TOP AND THE BOTTOM OF THE SCREEN
+set scrolloff 10
+
+# SET RELATIVE NUMBER
+# set relativenumber true
+
+# ENABLE GLOB SEARCH
+set globsearch true
+
+# DEFINE A CUSTOM 'OPEN' COMMAND
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here. Below uses an editor for
+# text files and a file opener for the rest. (file --mime-type <file>)
+cmd open ${{
+    case $(file --mime-type -Lb $f) in
+        text/x-c) $IDE $fx;;
+        text/x-shellscript) $IDE $fx;;
+        text/x-asm) $IDE $fx;;
+        text/x-java) $IDE $fx;;
+        text/x-c++) $IDE $fx;;
+        text/x-script.python) $IDE $fx;;
+        text/plain) $EDITOR $fx;;
+        application/octet-stream);; 
+        inode/x-empty) $EDITOR $fx;;
+        *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+# DEFINE A CUSTOM 'RENAME' COMMAND WITHOUT PROMPT FOR OVERWRITE
+cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+map r push :rename<space>
+
+# DEFINE X TO MAKE FILE EXECUTABLE
+cmd x %[ -e $1 ] && chmod +x $f && lf -remote 'send reload'
+map x push :x<enter>
+
+# DEFINE X TO MAKE FILE NON-EXECUTABLE
+cmd X %[ -e $1 ] && chmod -x $f && lf -remote 'send reload'
+map X push :X<enter>
+
+#DEFINE N TO CREATE A NEW FILE
+cmd new-file %[ -e $1 ] && printf "file exists" || touch $1
+map n push :new-file<space>
+
+# CUSTOM KEY-BIND
+map gr cd /
+map ge cd /etc/
+map gd cd ~/Workbench/personal/documents/
+map gb cd ~/Workbench/personal/bootstrap/
+map gp cd ~/Workbench/
+map gf cd ~/Workbench/fedoraproject/fedora_packaging/
+map gc cd ~/.config
+map gD cd ~/Downloads/
+
+map c unselect
+map <esc> clear
+
+map Io $"$IDE" $fx
+map In $"$IDE"
+map Ewo $"wo" -d $fx
+map Ewn $"wo" $fx
+map Eo $"$EDITOR" $fx
+map En $"$EDITOR"
+map Es $"sudoedit" $fx
+
+map R :reload
+map H :set hidden!
+
+map T %{{
+	echo "Single tag char: "
+	read ans
+	lf -remote "send $id tag $ans"
+}}
+
+map e nomap
