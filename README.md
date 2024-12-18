@@ -6,15 +6,33 @@
 This repository is meant to be a quick setup and restore for my personal use.
 
 ## Install
-
+### rpm-ostree rebase
 Rebase from an Fedora Atomic distribution:
+```bash
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/yardquit/luminari:latest
+```
+Restart your system for the changes take effect:
+```bash
+systemctl reboot
+```
+Rebase from unsigned to signed:
 ```bash
 rpm-ostree rebase ostree-image-signed:docker://ghcr.io/yardquit/luminari:latest
 ```
+Restart your system for the changes take effect:
+```bash
+systemctl reboot
+```
 
-Rebase from an ublue distribution:
+### bootc switch
+Rebase from an ublue atomic distribution:
 ```bash
 sudo bootc switch --enforce-container-sigpolicy ghcr.io/yardquit/luminari:latest
+```
+
+Restart your system for the changes take effect:
+```bash
+systemctl reboot
 ```
 
 ## Post Installs
