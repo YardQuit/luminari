@@ -55,12 +55,9 @@ COPY scripts /tmp/scripts
 COPY system_files /tmp/system_files
 COPY build.sh /tmp/build.sh
 
-## copy repository files, run build.sh script and commit 
-RUN rsync -rvK /tmp/system_files/ / && \
-    mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh && \
+## run build.sh script and commit 
+RUN /tmp/build.sh && \
     ostree container commit
-
 
 ### NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs

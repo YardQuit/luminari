@@ -7,7 +7,12 @@ This repository is meant to be a quick setup and restore for my personal use.
 
 ## Install
 
-To rebase from an atomic distribution:
+Rebase from an Fedora Atomic distribution:
+```bash
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/yardquit/luminari:latest
+```
+
+Rebase from an ublue distribution:
 ```bash
 sudo bootc switch --enforce-container-sigpolicy ghcr.io/yardquit/luminari:latest
 ```
