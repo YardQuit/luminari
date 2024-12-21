@@ -35,6 +35,9 @@ systemctl enable fstrim.timer
 ### Disabling System Unit File(s)
 systemctl disable cosmic-greeter.service
 
+### Change default firewalld zone
+firewall-cmd --set-default-zone=drop
+
 ### Clean Up
 shopt -s extglob
 rm -rf /tmp/* || true
