@@ -4,6 +4,9 @@ set -ouex pipefail
 
 RELEASE="$(rpm -E %fedora)"
 
+### Set hostname
+echo L$(date +"%y%m") | tee /etc/hostname
+
 ### Copy pre-configured system files
 rsync -rvK /tmp/system_files/ /
 
