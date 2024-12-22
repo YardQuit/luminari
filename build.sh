@@ -36,7 +36,7 @@ systemctl enable fstrim.timer
 systemctl disable cosmic-greeter.service
 
 ### Change default firewalld zone
-firewall-cmd --set-default-zone=drop
+sed -i 's/DefaultZone=FedoraWorkstation/DefaultZone=drop/g' /etc/firewalld/firewalld-workstation.conf
 
 ### Clean Up
 shopt -s extglob
