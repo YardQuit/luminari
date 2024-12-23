@@ -22,8 +22,10 @@ $(cat /tmp/packages/temporary) \
 $(cat /tmp/packages/virtual)
 
 ### Run configuration scripts
-sh /tmp/scripts/kvm.sh
-sh /tmp/scripts/yubico.sh
+sh /tmp/scripts/script_template.sh
+
+### Disabling System Unit File(s)
+systemctl disable cosmic-greeter.service
 
 ### Enabling System Unit File(s)
 systemctl enable rpm-ostreed-automatic.timer
@@ -32,11 +34,22 @@ systemctl enable docker.service
 systemctl enable podman.socket
 systemctl enable fstrim.timer
 
-### Disabling System Unit File(s)
-systemctl disable cosmic-greeter.service
+### Enable virtualization Unit File(s)
+for drv in qemu interface network nodedev nwfilter secret storage; do
+    systemctl enable virt${drv}d.service;
+    systemctl enable virt${drv}d{,-ro,-admin}.socket;
+done
+
+### Enable nested virtualization
+echo 'options kvm_intel nested=1' > /etc/modprobe.d/kvm_intel.conf
 
 ### Change default firewalld zone
+cp /etc/firewalld/firewalld-workstation.conf /etc/firewalld/firewalld-workstation.conf.bak
 sed -i 's/DefaultZone=FedoraWorkstation/DefaultZone=drop/g' /etc/firewalld/firewalld-workstation.conf
+
+### Add yubico challange for sudo
+cp /etc/pam.d/sudo /etc/pam.d/sudo.bak
+sed -i '/PAM-1.0/a\auth       required     pam_yubico.so mode=challenge-response' /etc/pam.d/sudo
 
 ### Clean Up
 shopt -s extglob
