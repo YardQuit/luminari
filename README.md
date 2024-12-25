@@ -1,3 +1,5 @@
+[![build-ublue-custom](https://github.com/YardQuit/luminari/actions/workflows/build.yml/badge.svg)](https://github.com/YardQuit/luminari/actions/workflows/build.yml)
+
 # Universal Blue Custom Image
 [universal-blue.org](https://universal-blue.org/)
 
