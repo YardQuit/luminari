@@ -1,10 +1,11 @@
+chromium
 darktable
 darktable-tools-noise
-obs-studio
+fedora-chromium-config
+gimp
 gnome-shell-extension-caffeine
 gnome-shell-extension-pop-shell
 gnome-shell-extension-pop-shell-shortcut-overrides
+obs-studio
 pop-gnome-shell-theme
-gimp
-chromium
-fedora-chromium-config
+tailscale
