@@ -14,7 +14,7 @@
           packages: write
         steps:
           - name: Delete Images Older Than 15 Days
-            uses: dataaxiom/ghcr-cleanup-action@v1.0.14
+            uses: dataaxiom/ghcr-cleanup-action@v1.0.15
             with:
               token: ${{ secrets.GITHUB_TOKEN }}
               packages: luminari
